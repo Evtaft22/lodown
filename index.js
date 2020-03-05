@@ -131,7 +131,9 @@ module.exports.last = last;
  * 
  * @param: {Any Datatype} value: Can be any datatype.
  * 
- * @return: {Function Call}: Returns the index of a value inside the array by invoking a function, that outputs a boolean value, through an array.
+ * @return: {Number}: Returns the index of the first occurence of the given value inside the given array********
+ * 
+ * @return: {Number}: Returns -1 if the value is not in the array.*********
  */
 
 
@@ -208,20 +210,28 @@ module.exports.unique = unique;
 
 
 /**
- * filter: Designed to execute a function on every element in an array.
+ * filter: Designed to execute a function on every value in a collection.*****
  * 
- * @param: {Array} array: list of elements to be iterated over.
+ * @param: {collection} array or object: list of values to be iterated over.*****
  * 
- * @param: {Function} func: code that will perform a certain action on values.
+ * @param: {Function} func: code that will test all values in collection and return a boolean.*****
  * 
  * @return: {Array}: an array containing the elements that returned true after being run through the function.
  */
  
-function filter(array, func){
+function filter(collection, func){
     let newArray = [];
-    for(let i = 0; i < array.length; i++){
-        if(func(array[i], i, array) === true){
-            newArray.push(array[i]);
+    if(Array.isArray(collection)){
+        for(let i = 0; i < collection.length; i++){
+            if(func(collection[i], i, collection) === true){
+                newArray.push(collection[i]);
+            }
+        }
+    }else{
+        for(var key in collection){
+            if(func(collection[key], key, collection) === true){
+                newArray.push(collection[key]);
+            }
         }
     }
     return newArray;
@@ -230,21 +240,29 @@ function filter(array, func){
 module.exports.filter = filter;
 
 /**
- * reject: designed to execute a function over each element in ana array.
+ * reject: designed to execute a function over each value in a collection.*****
  * 
- * @param: {Array} array: a list of elements to be iterated over.
+ * @param: {collection} array or object: a list of values to be iterated over.*****
  * 
- * @param: {Function} func: a block of code that will have an effect on the elements of an array.
+ * @param: {Function} func: a block of code that will test each value of a collection.****
  * 
  * @return: {Array}: an array containing the elements that returned false after being run through the function.
  */
  
-function reject(array, func){
+function reject(collection, func){
     let newArray = [];
-    for(let i = 0; i < array.length; i++){
-        if(!filter(array, func) === func(array[i], i, array)){
-            func(array[i], i, array);
-            newArray.push(array[i]);
+    if(Array.isArray(collection)){
+        for(let i = 0; i < collection.length; i++){
+            if(!filter(collection, func) === func(collection[i], i, collection)){
+                func(collection[i], i, collection);
+                newArray.push(collection[i]);
+            }
+        }    
+    }else{
+        for(var key in collection){
+            if(func(collection[key], key, collection) === true){
+                newArray.push(collection[key]);
+            }
         }
     }
     return newArray;
@@ -259,9 +277,7 @@ module.exports.reject = reject;
  * 
  * @param: {Function} func: a block of code to be run over each element in an array.
  * 
- * @return {Array}: an array containing every element that returned something truthy after being run through the function.
- * 
- * @return {Array}: an array containing every element that returned something falsy after being run through the function.
+ * @return {Array}: an array containing two arrays, one with all the values that returned true after being run through the function, and one array with all the falsey values.*******
  */
  
 function partition(array, func){
@@ -300,12 +316,12 @@ function map(collection, action){
  module.exports.map = map;
  
  /**
-  * pluck: Designed to reach the values of a property given, when that property is in multiple objects inside a given array.
+  * pluck: Designed to reach the values of a specified property that occurs in multiple objects inside the given array, and stores these values in a new array.*******
   * 
   * @param: {Array} arr: an array full of objects.
   * 
-  * @param: {Property} property: a key name that belongs to the objects in an array.
-  * 
+  * @param: {String} string: a key name that belongs to the objects in an array.*****
+  *  
   * @return: {Array}: an array containing the values that are paired to every occurnece of the <property> argument inside the array.
   */
   
@@ -319,7 +335,7 @@ function pluck(arr, property){
   module.exports.pluck = pluck;
   
 /**
- * every: Designed to test if every value in a collection is true.
+ * every: Designed to check if every value in a collection is true.
  * 
  * @param: {Array or Object} collection: an array or an object to be iterated over.
  * 
@@ -328,6 +344,8 @@ function pluck(arr, property){
  * @return {Boolean}: if every value run through the function returns true, then return true.
  * 
  * @return {Boolean}: if even one returns false, then return false.
+ * 
+ * @return {Boolean}: if a test function is not provided, every will return true.*******
  */
  
 function every(collection, func){
@@ -352,7 +370,7 @@ function every(collection, func){
  
  
 /**
- * some: Designed to test if every value in a collection is true.
+ * some: Designed to check if any value in a collection is true.
  * 
  * @param: {Array or Object} collection: an array or an object to be iterated over.
  * 
@@ -360,7 +378,9 @@ function every(collection, func){
  * 
  * @return {Boolean}: if every value run through the function returns false, then return false.
  * 
- * @return {Boolean}: if even one returns true, then return return true.
+ * @return {Boolean}: if even one returns true, then return true.
+ * 
+ * @return {Boolean}: if a test function is not provided, every will return true.*******
  */
   
 function some(collection, func){
