@@ -210,11 +210,11 @@ module.exports.unique = unique;
 
 
 /**
- * filter: Designed to execute a function on every value in a collection.*****
+ * filter: Designed to execute a function on each element and index in an array, or each value and it's key in an object.*****
  * 
- * @param: {collection} array or object: list of values to be iterated over.*****
+ * @param: {collection} array or object: list of values, along with their key or index, to be iterated over.*****
  * 
- * @param: {Function} func: code that will test all values in collection and return a boolean.*****
+ * @param: {Function} func: code that will test every element and index in an array, or each value and it's key in an object, and return a boolean.*****
  * 
  * @return: {Array}: an array containing the elements that returned true after being run through the function.
  */
@@ -240,11 +240,11 @@ function filter(collection, func){
 module.exports.filter = filter;
 
 /**
- * reject: designed to execute a function over each value in a collection.*****
+ * reject: designed to execute a function over each element and index in an array, or each value and it's key in an object.*****
  * 
- * @param: {collection} array or object: a list of values to be iterated over.*****
+ * @param: {collection} array or object: a list of values, along with their key or index, to be iterated over.*****
  * 
- * @param: {Function} func: a block of code that will test each value of a collection.****
+ * @param: {Function} func: a block of code that will test each element and index in an array, or each value and it's key in an object, and return a boolesn value.****
  * 
  * @return: {Array}: an array containing the elements that returned false after being run through the function.
  */
